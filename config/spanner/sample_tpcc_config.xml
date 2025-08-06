@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<parameters>
+
+    <!-- Connection details -->
+    <type>SPANNER</type>
+    <driver>com.google.cloud.spanner.jdbc.JdbcDriver</driver>
+    <url>
+        jdbc:cloudspanner:/projects/span-cloud-testing/instances/shobhitgup-benchbase/databases/bb-1k;numChannels=16;minSessions=500;maxSessions=800;credentials=/home/shobhitgup_google_com/bb_vs_javasb/span-cloud-testing.json
+    </url>
+    <reconnectOnConnectionFailure>true</reconnectOnConnectionFailure>
+    <isolation>TRANSACTION_REPEATABLE_READ</isolation>
+    <batchsize>15</batchsize>
+    <loaderThreads>32</loaderThreads>
+
+    <!-- Scale factor is the number of warehouses in TPCC -->
+    <scalefactor>500</scalefactor>
+
+    <!-- The workload -->
+    <terminals>500</terminals>
+    <works>
+        <work>
+            <time>3600</time>
+            <rate>unlimited</rate>
+            <weights>45,43,4,4,4</weights>
+        </work>
+    </works>
+
+    <!-- TPCC specific -->
+    <transactiontypes>
+        <transactiontype>
+            <name>NewOrder</name>
+            <!--<preExecutionWait>18000</preExecutionWait>-->
+            <!--<postExecutionWait>12000</postExecutionWait>-->
+        </transactiontype>
+        <transactiontype>
+            <name>Payment</name>
+            <!--<preExecutionWait>3000</preExecutionWait>-->
+            <!--<postExecutionWait>12000</postExecutionWait>-->
+        </transactiontype>
+        <transactiontype>
+            <name>OrderStatus</name>
+            <!--<preExecutionWait>2000</preExecutionWait>-->
+            <!--<postExecutionWait>10000</postExecutionWait>-->
+        </transactiontype>
+        <transactiontype>
+            <name>Delivery</name>
+            <!--<preExecutionWait>2000</preExecutionWait>-->
+            <!--<postExecutionWait>5000</postExecutionWait>-->
+        </transactiontype>
+        <transactiontype>
+            <name>StockLevel</name>
+            <!--<preExecutionWait>2000</preExecutionWait>-->
+            <!--<postExecutionWait>5000</postExecutionWait>-->
+        </transactiontype>
+    </transactiontypes>
+</parameters>

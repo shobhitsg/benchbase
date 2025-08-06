@@ -22,7 +22,6 @@ import com.oltpbenchmark.benchmarks.tpcc.TPCCConfig;
 import com.oltpbenchmark.benchmarks.tpcc.TPCCConstants;
 import com.oltpbenchmark.benchmarks.tpcc.TPCCUtil;
 import com.oltpbenchmark.benchmarks.tpcc.TPCCWorker;
-import java.math.BigDecimal;
 import java.sql.*;
 import java.util.Random;
 import org.slf4j.Logger;
@@ -310,7 +309,7 @@ public class Delivery extends TPCCProcedure {
 
     try (PreparedStatement delivUpdateCustBalDelivCnt =
         this.getPreparedStatement(conn, delivUpdateCustBalDelivCntSQL)) {
-      delivUpdateCustBalDelivCnt.setBigDecimal(1, BigDecimal.valueOf(orderLineTotal));
+      delivUpdateCustBalDelivCnt.setDouble(1, orderLineTotal);
       delivUpdateCustBalDelivCnt.setInt(2, w_id);
       delivUpdateCustBalDelivCnt.setInt(3, d_id);
       delivUpdateCustBalDelivCnt.setInt(4, c_id);

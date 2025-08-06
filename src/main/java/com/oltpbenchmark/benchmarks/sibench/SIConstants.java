@@ -19,7 +19,7 @@ package com.oltpbenchmark.benchmarks.sibench;
 
 public abstract class SIConstants {
 
-  public static final String TABLE_NAME = "sitest";
+  public static final String TABLE_NAME = "SITEST";
 
   public static final int NUM_FIELDS = 1;
 

@@ -601,11 +601,19 @@ public abstract class Worker<T extends BenchmarkModule> implements Runnable {
 
             retryCount++;
           } else {
-            LOG.warn(
-                String.format(
-                    "SQLException occurred during [%s] and will not be retried... sql state [%s], error code [%d].",
-                    transactionType, ex.getSQLState(), ex.getErrorCode()),
-                ex);
+            if (isConcurrentModification(ex)) {
+              LOG.debug(
+                  String.format(
+                      "SQLException occurred during [%s] and will not be retried... sql state [%s], error code [%d].",
+                      transactionType, ex.getSQLState(), ex.getErrorCode()),
+                  ex);
+            } else {
+              LOG.warn(
+                  String.format(
+                      "SQLException occurred during [%s] and will not be retried... sql state [%s], error code [%d].",
+                      transactionType, ex.getSQLState(), ex.getErrorCode()),
+                  ex);
+            }
 
             status = TransactionStatus.ERROR;
 
@@ -641,6 +649,20 @@ public abstract class Worker<T extends BenchmarkModule> implements Runnable {
 
       throw new RuntimeException(msg, ex);
     }
+  }
+
+  private boolean isConcurrentModification(SQLException ex) {
+    String sqlState = ex.getSQLState();
+    int errorCode = ex.getErrorCode();
+    String message = ex.getMessage();
+
+    // ------------------
+    // SPANNER: we should be able to retry the entire transaction when meeting a concurrent
+    // modification error.
+    // ------------------
+    return ((errorCode == 0 && sqlState.equals("P0001")) || (errorCode == 10 && sqlState == null))
+        && message.contains(
+            "The transaction was aborted and could not be retried due to a concurrent modification");
   }
 
   /**

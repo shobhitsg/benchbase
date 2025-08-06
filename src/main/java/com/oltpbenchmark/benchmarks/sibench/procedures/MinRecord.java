@@ -28,7 +28,7 @@ import java.sql.SQLException;
 
 public class MinRecord extends Procedure {
   public final SQLStmt minStmt =
-      new SQLStmt("SELECT id FROM " + TABLE_NAME + " ORDER BY value ASC LIMIT 1");
+      new SQLStmt("SELECT ID FROM " + TABLE_NAME + " ORDER BY VALUE ASC LIMIT 1");
 
   public int run(Connection conn) throws SQLException {
     int minId = 0;

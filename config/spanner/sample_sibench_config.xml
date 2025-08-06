@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<parameters>
+
+    <!-- Connection details -->
+    <type>SPANNER</type>
+    <driver>com.google.cloud.spanner.jdbc.JdbcDriver</driver>
+    <url>jdbc:cloudspanner:/projects/span-cloud-testing/instances/shobhitgup-sysbench-java/databases/sibench;numChannels=16;minSessions=500;maxSessions=800;credentials=/home/shobhitgup_google_com/bb_vs_javasb/span-cloud-testing.json</url>
+    <reconnectOnConnectionFailure>true</reconnectOnConnectionFailure>
+    <isolation>TRANSACTION_REPEATABLE_READ</isolation>
+    <batchsize>128</batchsize>
+
+    <scalefactor>100</scalefactor>
+
+    <!-- The workload -->
+    <terminals>32</terminals>
+    <works>
+        <work>
+            <time>1800</time>
+            <rate>unlimited</rate>
+            <weights>50,50</weights>
+        </work>
+    </works>
+
+    <!-- SIBENCH Procedures declaration -->
+    <transactiontypes>
+        <transactiontype>
+            <name>MinRecord</name>
+        </transactiontype>
+        <transactiontype>
+            <name>UpdateRecord</name>
+        </transactiontype>
+    </transactiontypes>
+</parameters>

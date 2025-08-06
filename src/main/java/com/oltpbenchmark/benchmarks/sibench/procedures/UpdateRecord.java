@@ -27,7 +27,7 @@ import java.sql.SQLException;
 
 public class UpdateRecord extends Procedure {
   public final SQLStmt updateStmt =
-      new SQLStmt("UPDATE " + TABLE_NAME + " SET value = value + 1 WHERE id = ?");
+      new SQLStmt("UPDATE " + TABLE_NAME + " SET VALUE = VALUE + 1 WHERE ID = ?");
 
   public void run(Connection conn, int id) throws SQLException {
     try (PreparedStatement stmt = this.getPreparedStatement(conn, updateStmt)) {
