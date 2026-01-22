@@ -22,7 +22,7 @@ on:
     branches: [ main ]
   # Run these workflows on a schedule so that docker images are regularly updated for security patches.
   schedule:
-    - cron: "1 0 * * *"
+    - cron: "1 0 * * 1"
   # Give us a button to allow running the workflow on demand for testing.
   workflow_dispatch:
     inputs:
@@ -568,6 +568,10 @@ jobs:
           MEMORY_SIZE: .75
         ports:
           - 26257:26257
+        # Workaround need for volume mapping and user perms.
+        # See Also: Issue #625
+        options: >-
+          --user root
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v4
